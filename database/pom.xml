@@ -237,9 +237,5 @@
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.clapper</groupId>
-            <artifactId>grizzled-slf4j_2.10</artifactId>
-        </dependency>
     </dependencies>
 </project>

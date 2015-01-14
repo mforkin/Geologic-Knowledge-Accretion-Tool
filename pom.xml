@@ -160,19 +160,20 @@
                 </exclusions>
             </dependency>
             <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-classic</artifactId>
-                <version>${logback-classic.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.clapper</groupId>
-                <artifactId>grizzled-slf4j_2.10</artifactId>
-                <version>${log.grizzled.version}</version>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <version>${slf4j.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback-classic.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.jooq</groupId>
@@ -205,11 +206,6 @@
                 <version>${commons-io.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-email</artifactId>
-                <version>${commons.mail.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
@@ -235,6 +231,12 @@
                 <groupId>org.scalatra</groupId>
                 <artifactId>scalatra_${scala.major.version}</artifactId>
                 <version>${scalatra.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-api</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.scalatra</groupId>
@@ -250,11 +252,6 @@
                 <groupId>org.json4s</groupId>
                 <artifactId>json4s-jackson_${scala.major.version}</artifactId>
                 <version>${json4s.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.scalatra</groupId>
-                <artifactId>scalatra-json_${scala.major.version}</artifactId>
-                <version>${scalatra.version}</version>
             </dependency>
             <dependency>
                 <groupId>postgresql</groupId>
