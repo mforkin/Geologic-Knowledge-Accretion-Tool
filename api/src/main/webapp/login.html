@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>GKAT</title>
+    <link type="text/css" rel="stylesheet" href="login.css" />
+</head>
+<body class="login-background">
+<div class="login-content">
+    <form action="j_spring_security_check" method="POST">
+        <img src="assets/logo.png" id="gkat-logo">
+        <table>
+            <tr>
+                <td align="right"><p class="login-input-text">Username:</p></td>
+                <td align="left">
+                    <input type="text" class="login-input-field" id="username" name="j_username">
+                </td>
+            </tr>
+            <tr>
+                <td align="right"><p class="login-input-text">Password:</p></td>
+                <td align="left">
+                    <input type="password" class="login-input-field" id="password" name="j_password">
+                </td>
+            </tr>
+
+        </table>
+        <div id="errorblock"></div>
+        <div width="100%">
+            <input class="login-submit-button" type="submit" value="Log In">
+        </div>
+    </form>
+</div>
+</body>
+</html>

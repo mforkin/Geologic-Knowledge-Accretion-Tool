@@ -1,0 +1,37 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:s="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+          http://www.springframework.org/schema/security
+          http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+    <bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
+    <bean id="GKAT_DS" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/jdbc/GKAT_DS" />
+    </bean>
+
+    <bean id="userDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+        <property name="dataSource" ref="GKAT_DS" />
+    </bean>
+    <s:http auto-config="true">
+        <s:intercept-url pattern="/spring_*"/>
+        <s:intercept-url pattern="/j_spring_*"/>
+        <s:intercept-url pattern="/tmp/**" access="ROLE_ANONYMOUS"/>
+        <s:intercept-url pattern="/favicon.ico" access="ROLE_ANONYMOUS"/>
+        <s:intercept-url pattern="/images/**" access="ROLE_ANONYMOUS,ROLE_USER,ROLE_ADMIN"/>
+        <s:intercept-url pattern="/assets/**" access="ROLE_ANONYMOUS,ROLE_USER,ROLE_ADMIN"/>
+        <s:intercept-url pattern="/css/**" access="ROLE_ANONYMOUS,ROLE_USER,ROLE_ADMIN"/>
+        <s:intercept-url pattern="/login*" access="ROLE_ANONYMOUS,ROLE_USER,ROLE_ADMIN"/>
+        <s:intercept-url pattern="/**" access="ROLE_USER,ROLE_ADMIN"/>
+        <s:form-login login-page="/login.html"/>
+    </s:http>
+
+    <s:authentication-manager>
+        <s:authentication-provider user-service-ref="userDetailsService">
+            <s:password-encoder ref="encoder" />
+        </s:authentication-provider>
+    </s:authentication-manager>
+
+</beans>

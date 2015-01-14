@@ -1,0 +1,60 @@
+/******** Login screen *****************/
+
+.login-background {
+    background-attachment: fixed;
+    background-color: #3A4252;
+    background-image: -ms-linear-gradient(bottom, #3A4252 0%, #606878 100%);
+    background-image: -moz-linear-gradient(bottom, #3A4252 0%, #606878 100%);
+    background-image: -o-linear-gradient(bottom, #3A4252 0%, #606878 100%);
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #3A4252), color-stop(1, #606878));
+    background-image: -webkit-linear-gradient(bottom, #3A4252 0%, #606878 100%);
+    background-image: linear-gradient(to top, #3A4252 0%, #606878 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#606878', EndColorStr='#3A4252'); /* IE6,IE7 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#606878', EndColorStr='#3A4252')"; /* IE8,IE9 */
+}
+
+.x-ie .login-background {
+    background-image: none;
+    background-color: #606878;
+}
+
+.login-content {
+    position: absolute;
+    left: 40%;
+    top: 30%;
+}
+
+.login-submit-button {
+    border: none;
+    background: transparent;
+    color: #59A9C4;
+    float: right;
+}
+
+.login-submit-button:hover {
+    border: 1px #999999 outset;
+    filter:alpha(opacity=50);-moz-opacity:.5;opacity:.5;
+    background: #FFFFFF;
+    color: #000000;
+}
+
+.login-input-field {
+    border: 2px solid #7F929E;
+    background: #ffffff;
+    color: gray;
+    width: 200px;
+}
+
+.login-input-text {
+    font-family: Montserrat;
+    font-size: 14px;
+}
+
+/************** Fonts ****************************/
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Montserrat-Regular'), url(assets/Montserrat_font.woff) format('woff');
+}
