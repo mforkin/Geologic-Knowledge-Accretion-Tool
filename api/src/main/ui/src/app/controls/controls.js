@@ -4,21 +4,22 @@ angular.module('controls', [])
         return {
             restrict: 'E',
             scope: {
-                observations: '='
+                observations: '=',
+                mode: '='
             },
             templateUrl: 'controls/controls.tpl.html',
             link: function (scope, element, attrs) {
                 scope.controls = [
                     {
-                        iconClass: 'fa fa-globe',
+                        iconClass: 'fa fa-search',
                         callback: function () {
-                            console.log('globe');
+                            scope.mode = scope.mode === 'search' ? 'fullmap' : 'search';
                         }
                     },
                     {
                         iconClass: 'fa fa-plus',
                         callback: function () {
-                            console.log('add');
+                            scope.mode = scope.mode === 'add' ? 'fullmap' : 'add';
                         }
                     }
                 ];

@@ -8,6 +8,8 @@
 @import 'vars'
 @import 'masthead'
 @import 'control'
+@import 'search'
+@import 'add'
 
 
 map
@@ -15,15 +17,34 @@ map
     top 0
     bottom 0
     right 0
-    left 50px
-    box-shadow -3px 0 15px 3px rgba(0,0,0,0.5)
+    left 60px
+    z-index 900
+    box-shadow -3px 0 15px 3px rgba(255,255,255,0.5)
 
 control-panel
     position absolute
     top 0
     bottom 0
     left 0
-    width 50px
+    width 60px
+
+search
+    position absolute
+    top 0
+    max-height 100%
+    overflow auto
+    left 75px
+    width 400px
+    z-index 901
+    -webkit-transition width 1s linear, opacity 1s linear
+    -moz-transition width 1s linear, opacity 1s linear
+    transition width 1s linear, opacity 1s linear
+    &.minimized
+        width 0
+        opacity 0
+        -webkit-transition width 1s linear, opacity 1s linear
+        -moz-transition width 1s linear, opacity 1s linear
+        transition width 1s linear, opacity 1s linear
 
 @font-face
     font-family 'FontAwesome'

@@ -1,6 +1,8 @@
 angular.module('gkat.home', [
     'map',
-    'controls'
+    'controls',
+    'search',
+    'add'
 ])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/home', {
@@ -10,5 +12,8 @@ angular.module('gkat.home', [
     }])
 
     .controller('HomeController', ['$scope', function($scope) {
-        $scope.observations = [];
+        $scope.data = {
+            observations: [],
+            mode: 'fullmap'
+        };
     }]);

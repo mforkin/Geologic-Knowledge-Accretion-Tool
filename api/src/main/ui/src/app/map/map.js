@@ -14,8 +14,15 @@ angular.module("map", [])
                         zoom: 8,
                         maxZoom: 18,
                         minZoom: 3,
-                        attributionControl: false
+                        attributionControl: false,
+                        zoomControl: false
                     });
+
+                var zoomControl = L.control.zoom({
+                    position: 'topright'
+                });
+
+                map.addControl(zoomControl);
 
                 L.tileLayer.provider('Stamen.TonerLite').addTo(map);
             }
