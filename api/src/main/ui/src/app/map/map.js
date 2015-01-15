@@ -4,7 +4,8 @@ angular.module("map", [])
         return {
             restrict: 'E',
             scope: {
-                observations: '='
+                observations: '=',
+                mouseLatLon: '='
             },
             link: function (scope, element, attrs) {
                 var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -23,6 +24,10 @@ angular.module("map", [])
                 });
 
                 map.addControl(zoomControl);
+
+                map.on("mousemove", function (obj) {
+                    scope.$apply(function () { scope.mouseLatLon = obj.latlng.lat.toFixed(5) + ", " + obj.latlng.lng.toFixed(5); });
+                });
 
                 L.tileLayer.provider('Stamen.TonerLite').addTo(map);
             }

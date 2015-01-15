@@ -14,6 +14,7 @@ angular.module('gkat.home', [
     .controller('HomeController', ['$scope', function($scope) {
         $scope.data = {
             observations: [],
-            mode: 'fullmap'
+            mode: 'fullmap',
+            mouseLatLon: 'Lat, Lon'
         };
     }]);
