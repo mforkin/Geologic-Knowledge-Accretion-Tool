@@ -226,7 +226,12 @@
                 <version>${project.version}</version>
                 <type>jar</type>
             </dependency>
-
+            <dependency>
+                <groupId>io.github.mforkin</groupId>
+                <artifactId>service</artifactId>
+                <version>${project.version}</version>
+                <type>jar</type>
+            </dependency>
             <dependency>
                 <groupId>org.scalatra</groupId>
                 <artifactId>scalatra_${scala.major.version}</artifactId>

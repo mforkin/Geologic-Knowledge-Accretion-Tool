@@ -3,4 +3,4 @@ target
 *.idea
 *.swp
 *.swap
-src/main/java/com/ccri/arpeggio/jooq/generated/*
+src/main/java/io/github/mforkin/jooq/generated/*

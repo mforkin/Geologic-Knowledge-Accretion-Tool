@@ -7,16 +7,21 @@ angular.module('gkat.home', [
 ])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/home', {
-            templateUrl: 'home/home.tpl.html',
-            controller: 'HomeController'
+            templateUrl: 'home/home.tpl.html'
         });
     }])
 
-    .controller('HomeController', ['$scope', function($scope) {
+    .controller('HomeController', ['$scope', 'Observation', function($scope, Observation) {
         $scope.data = {
             observations: [],
             mode: 'fullmap',
             mouseLatLon: 'Lat, Lon',
             map: null
         };
+
+        Observation.query().$promise.then(function (obs) {
+            $scope.data.observations = obs;
+        });
+
+
     }]);

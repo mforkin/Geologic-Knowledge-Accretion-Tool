@@ -11,7 +11,26 @@ angular.module("map", [])
             link: function (scope, element, attrs) {
                 var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                     osm = new L.TileLayer(osmUrl),
-                    layers = {};
+                    layers = {},
+                    markerIds = [],
+                    siteLayer = L.layerGroup([]),
+                    icon = L.icon({
+                        iconUrl: 'assets/marker-icon.png',
+                        iconRetinaUrl: 'assets/marker-icon@2x.png',
+                        iconSize: [25, 41],
+                        iconAnchor: [12, 41],
+                        popupAnchor: [1, -34],
+                        shadowUrl: 'assets/marker-shadow.png',
+                        shadowRetinaUrl: 'assets/marker-shadow@2x.png',
+                        shadowSize: [41, 41]
+                    });
+
+                _.each(scope.observations, function (ob) {
+                    if (!_.contains(markerIds, ob.id)) {
+                        markerIds.push(ob.id);
+                        siteLayer.addLayer(L.marker([ob.lat, ob.lon], {icon: icon}).bindPopup('Tags: ' + ob.tags.join(", ") + '\nDescription:' + ob.description));
+                    }
+                });
 
                 layers['Basic'] = L.tileLayer.provider('Stamen.TonerLite');
                 layers['Terrain'] = L.tileLayer.provider('Acetate.terrain');
@@ -26,7 +45,7 @@ angular.module("map", [])
                     minZoom: 3,
                     attributionControl: false,
                     zoomControl: false,
-                    layers: [layers.Basic]
+                    layers: [layers.Basic, siteLayer]
                 });
 
                 var zoomControl = L.control.zoom({
@@ -43,9 +62,18 @@ angular.module("map", [])
                     scope.$apply(function () { scope.mouseLatLon = obj.latlng.lat.toFixed(5) + ", " + obj.latlng.lng.toFixed(5); });
                 });
 
-                L.control.layers(layers).addTo(scope.map);
+                L.control.layers(layers, {Sites: siteLayer}).addTo(scope.map);
 
                 scope.map.addControl(zoomControl);
+
+                scope.$watch('observations', function (obs) {
+                    _.each(obs, function (ob) {
+                        if (!_.contains(markerIds, ob.id)) {
+                            markerIds.push(ob.id);
+                            siteLayer.addLayer(L.marker([ob.lat, ob.lon], {icon: icon}).bindPopup('Tags: ' + ob.tags.join(", ") + '\nDescription:' + ob.description));
+                        }
+                    });
+                }, true);
             }
         };
     }]);

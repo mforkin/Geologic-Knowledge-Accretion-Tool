@@ -19,4 +19,11 @@ angular.module('gkat', [
             appName: appInfo.name,
             appTitle: appInfo.title
         };
+    }])
+
+    .factory("Observation", ['$resource', function ($resource) {
+        return $resource('rest/observation', {}, {
+            post: {method: 'POST', isArray: false},
+            query: {method: 'GET', isArray: true}
+        });
     }]);
