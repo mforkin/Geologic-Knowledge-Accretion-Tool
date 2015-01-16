@@ -2,7 +2,8 @@ angular.module('gkat.home', [
     'map',
     'controls',
     'search',
-    'add'
+    'add',
+    'pan'
 ])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/home', {
@@ -15,6 +16,7 @@ angular.module('gkat.home', [
         $scope.data = {
             observations: [],
             mode: 'fullmap',
-            mouseLatLon: 'Lat, Lon'
+            mouseLatLon: 'Lat, Lon',
+            map: null
         };
     }]);

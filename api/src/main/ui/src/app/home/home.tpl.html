@@ -1,7 +1,8 @@
 <div class="home-cnt" ng-controller="HomeController">
-    <map observations="data.observations" mouse-lat-lon="data.mouseLatLon"></map>
+    <map observations="data.observations" mouse-lat-lon="data.mouseLatLon" map="data.map"></map>
     <control-panel observations="data.observations" mode="data.mode"></control-panel>
     <search class="minimized" ng-class="{minimized: data.mode !== 'search'}" data="data.observations" mode="data.mode"></search>
     <add class="minimized" ng-class="{minimized: data.mode !== 'add'}" data="data.observations" mode="data.mode"></add>
     <div class="mouseLatLon">{{data.mouseLatLon}}</div>
+    <pan class="minimized" ng-class="{minimized: data.mode !== 'pan'}" map="data.map"></pan>
 </div>

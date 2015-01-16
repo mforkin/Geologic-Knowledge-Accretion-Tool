@@ -17,9 +17,15 @@ angular.module('controls', [])
                         }
                     },
                     {
-                        iconClass: 'fa fa-plus',
+                        iconClass: 'fa fa-map-marker',
                         callback: function () {
                             scope.mode = scope.mode === 'add' ? 'fullmap' : 'add';
+                        }
+                    },
+                    {
+                        iconClass: 'fa fa-globe',
+                        callback: function () {
+                            scope.mode = scope.mode === 'pan' ? 'fullmap' : 'pan';
                         }
                     }
                 ];

@@ -5,31 +5,47 @@ angular.module("map", [])
             restrict: 'E',
             scope: {
                 observations: '=',
-                mouseLatLon: '='
+                mouseLatLon: '=',
+                map: '='
             },
             link: function (scope, element, attrs) {
                 var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                     osm = new L.TileLayer(osmUrl),
-                    map = L.map(element[0], {
-                        center: L.latLng(40.279957,-74.73862),
-                        zoom: 8,
-                        maxZoom: 18,
-                        minZoom: 3,
-                        attributionControl: false,
-                        zoomControl: false
-                    });
+                    layers = {};
+
+                layers['Basic'] = L.tileLayer.provider('Stamen.TonerLite');
+                layers['Terrain'] = L.tileLayer.provider('Acetate.terrain');
+                layers['Detailed Terrain'] = L.tileLayer.provider('Acetate.all');
+                layers['Hill Shading'] = L.tileLayer.provider('Acetate.hillshading');
+                layers['Detailed Colored'] = L.tileLayer.provider('Esri.DeLorme');
+
+                scope.map = L.map(element[0], {
+                    center: L.latLng(40.279957,-74.73862),
+                    zoom: 8,
+                    maxZoom: 18,
+                    minZoom: 3,
+                    attributionControl: false,
+                    zoomControl: false,
+                    layers: [layers.Basic]
+                });
 
                 var zoomControl = L.control.zoom({
                     position: 'topright'
                 });
 
-                map.addControl(zoomControl);
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function (p) {
+                        scope.map.panTo({lat: p.coords.latitude, lon: p.coords.longitude});
+                    });
+                }
 
-                map.on("mousemove", function (obj) {
+                scope.map.on("mousemove", function (obj) {
                     scope.$apply(function () { scope.mouseLatLon = obj.latlng.lat.toFixed(5) + ", " + obj.latlng.lng.toFixed(5); });
                 });
 
-                L.tileLayer.provider('Stamen.TonerLite').addTo(map);
+                L.control.layers(layers).addTo(scope.map);
+
+                scope.map.addControl(zoomControl);
             }
         };
     }]);

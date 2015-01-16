@@ -46,10 +46,13 @@ module.exports = {
             // TODO - test only
             'vendor/bower/angular-mocks/angular-mocks.js',
         ],
-        css: [],
+        css: [
+
+        ],
         assets: [
             'vendor/bower/font-awesome/fonts/*',
-            'vendor/bower/bootstrap/fonts/*'
+            'vendor/bower/bootstrap/fonts/*',
+            'vendor/bower/leaflet-dist/images/*'
         ]
     }
 }
