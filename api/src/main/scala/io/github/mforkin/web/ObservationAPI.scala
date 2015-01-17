@@ -16,7 +16,7 @@ trait ObservationAPI extends API with ObservationService {
   this: DataAccess =>
 
   get("/") {
-    getObservations(params.getAs[Seq[Int]]("ids"))
+    getObservations(params.getAs[String]("queryString"))
   }
 
   post("/") {

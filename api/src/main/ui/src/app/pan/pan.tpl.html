@@ -1,8 +1,7 @@
 <form ng-submit="panTo({lat: lat, lon: lon})">
-    <label>Lat:</label>
-    <input type="text" ng-model="lat" />
-    <label>Lon:</label>
-    <input type="text" ng-model="lon" />
+    <label>Go To:</label>
+    (<input type="text" ng-model="lat" placeholder="Lat"/>,
+    <input type="text" ng-model="lon" placeholder="Lon"/>)
     <button type="submit" class="btn btn-primary btn-sm">
         <i class="fa fa-crosshairs"></i>
     </button>

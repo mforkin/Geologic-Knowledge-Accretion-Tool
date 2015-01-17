@@ -5,6 +5,7 @@ import java.sql.Timestamp
 import io.github.mforkin.database.DataAccess
 import io.github.mforkin.database.jooq.generated.Tables._
 import org.joda.time.DateTime
+import org.jooq.impl.Factory
 import collection.JavaConverters._
 
 /**
@@ -19,11 +20,23 @@ trait ObservationService extends Service {
 
   import db._
 
-  def getObservations (ids: Option[Seq[Int]] = None) = {
+  def getObservations (queryString: Option[String] = None) = {
     val q = selectFrom(OBSERVATION)
 
-    (ids match {
-      case Some(i) => q.where(OBSERVATION.ID.in(i.map(Int.box).asJavaCollection))
+    (queryString match {
+      case Some(qs) if qs.length > 0 => q.where(
+        OBSERVATION.DESCRIPTION.upper().like("%" + qs.toUpperCase + "%")
+          .or(Factory.`val`(qs.toUpperCase).like(OBSERVATION.DESCRIPTION))
+          .or(OBSERVATION.ID.in(
+            selectDistinct(OBSERVATION.ID)
+              .from(OBSERVATION)
+              .join(OBSERVATION_TAGS).on(OBSERVATION.ID.equal(OBSERVATION_TAGS.OBSERVATION_ID))
+              .join(TAGS).on(OBSERVATION_TAGS.TAG_ID.equal(TAGS.ID))
+              .where(TAGS.TAG.upper().like("%" + qs.toUpperCase + "%").or(
+              Factory.`val`(qs.toUpperCase).like(TAGS.TAG)
+            ))
+          ))
+      )
       case _ => q
     }).fetch.asScala.map(r => Observation(
       r.getId.toInt,

@@ -67,11 +67,11 @@ angular.module("map", [])
                 scope.map.addControl(zoomControl);
 
                 scope.$watch('observations', function (obs) {
+                    siteLayer.clearLayers();
+                    markerIds = [];
                     _.each(obs, function (ob) {
-                        if (!_.contains(markerIds, ob.id)) {
-                            markerIds.push(ob.id);
-                            siteLayer.addLayer(L.marker([ob.lat, ob.lon], {icon: icon}).bindPopup('Tags: ' + ob.tags.join(", ") + '\nDescription:' + ob.description));
-                        }
+                        markerIds.push(ob.id);
+                        siteLayer.addLayer(L.marker([ob.lat, ob.lon], {icon: icon}).bindPopup('Tags: ' + ob.tags.join(", ") + '\nDescription:' + ob.description));
                     });
                 }, true);
             }
