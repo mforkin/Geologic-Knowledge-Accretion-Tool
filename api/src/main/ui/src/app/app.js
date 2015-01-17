@@ -21,6 +21,27 @@ angular.module('gkat', [
         };
     }])
 
+    .directive("multipartFile", [function () {
+        return {
+            scope: {
+                multipartFile: "="
+            },
+            link: function (scope, element, attr) {
+                element.bind("change", function (event) {
+                    var formData = new FormData();
+                    scope.$apply(function () {
+                        formData.append('file', event.target.files[0]);
+
+                        scope.multipartFile = {
+                            fileInfo: event.target.files,
+                            formData: formData
+                        };
+                    });
+                });
+            }
+        };
+    }])
+
     .factory("Observation", ['$resource', function ($resource) {
         return $resource('rest/observation', {}, {
             post: {method: 'POST', isArray: false},

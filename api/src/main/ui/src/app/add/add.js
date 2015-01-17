@@ -12,6 +12,9 @@ angular.module('add', [])
                 scope.keyword = '';
                 scope.keywords = [];
 
+                scope.imageFile = {};
+                scope.sampleImages = [];
+
                 scope.description = '';
                 scope.addKeyword = function () {
                     if (scope.keyword !== '' && scope.keywords.indexOf(scope.keyword.toUpperCase()) < 0) {
@@ -32,11 +35,38 @@ angular.module('add', [])
                         lon: parseFloat(scope.lon),
                         tags: scope.keywords,
                         description: scope.description,
-                        images: []
+                        images: scope.sampleImages
                     }).$promise.then(function (resp) {
                         $timeout(function () { scope.data.push(resp); });
+                        scope.sampleImages = [];
+                        scope.lat = '';
+                        scope.lon = '';
+                        scope.description = '';
+                        scope.keywords = [];
+                        scope.keyword = '';
+                        scope.mode = 'fullmap';
                     });
                 };
+
+                function imageAdded (response) {
+                    scope.sampleImages.push(response.name);
+                    scope.imageFile.fileInfo = null;
+                    scope.imageFile.formData = null;
+                }
+
+                scope.$watch('imageFile', function (file) {
+                    if (file && file.formData) {
+                        $.ajax({
+                            url: 'rest/observation/image',
+                            data: file.formData,
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            type: 'POST',
+                            success: imageAdded
+                        });
+                    }
+                });
             }
         };
     }]);

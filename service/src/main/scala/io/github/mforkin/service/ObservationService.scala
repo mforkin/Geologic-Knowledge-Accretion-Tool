@@ -94,6 +94,18 @@ trait ObservationService extends Service {
 
     tagIds.foldLeft(newTags)((tot, tId) => tot.values(newObs.getId, tId, username)).execute()
 
+    images.map(i => {
+      insertInto(
+        OBSERVATION_IMAGES,
+        OBSERVATION_IMAGES.OBSERVATION_ID,
+        OBSERVATION_IMAGES.FILENAME
+      ).values(
+        newObs.getId,
+        i
+      ).execute()
+
+    })
+
     Observation(
       newObs.getId,
       new DateTime(newObs.getDate.getTime),
@@ -103,5 +115,21 @@ trait ObservationService extends Service {
       newObs.getDescription,
       images
     )
+  }
+
+  def saveImage (f: Array[Byte], filename: String) = {
+    Map("name" -> insertInto(
+      IMAGES,
+      IMAGES.FILENAME,
+      IMAGES.IMAGE
+    )
+    .values(
+      filename,
+      f
+    ).returning.fetchOne.getFilename)
+  }
+
+  def getImage(filename: String) = {
+    selectFrom(IMAGES).where(IMAGES.FILENAME.equal(filename)).fetchOne.getImage
   }
 }

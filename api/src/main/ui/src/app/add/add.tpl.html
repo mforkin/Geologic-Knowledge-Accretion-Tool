@@ -24,8 +24,12 @@
             <label>Description</label>
             <textarea ng-model="description"></textarea>
         </div>
-        <div class="imageUpload">
-
+        <div class="image-upload">
+            <label>Upload Image</label>
+            <input name="file" type="file" multipart-file="imageFile" placeholder="Upload Image"/>
+            <div class="img-preview" ng-repeat="i in sampleImages">
+                <img src="rest/observation/image/{{i}}" />
+            </div>
         </div>
     </div>
     <div class="panel-footer">

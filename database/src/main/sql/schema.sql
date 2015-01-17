@@ -29,9 +29,15 @@ WITH (OIDS=FALSE);
 
 CREATE TABLE public.observation_images(
     filename varchar(511),
-    image bytea,
     observation_id integer,
     CONSTRAINT oi_pk PRIMARY KEY (filename)
+)
+WITH (OIDS=FALSE);
+
+CREATE TABLE public.images(
+    filename varchar(511),
+    image bytea,
+    CONSTRAINT img_pk PRIMARY KEY (filename)
 )
 WITH (OIDS=FALSE);
 
@@ -53,6 +59,10 @@ WITH (OIDS=FALSE);
 
 ALTER TABLE public.observation_images ADD CONSTRAINT obs_obs_img_fk FOREIGN KEY (observation_id)
 REFERENCES public.observation (id) MATCH FULL
+ON DELETE NO ACTION ON UPDATE NO ACTION NOT DEFERRABLE;
+
+ALTER TABLE public.observation_images ADD CONSTRAINT img_obs_img_fk FOREIGN KEY (filename)
+REFERENCES public.images (filename) MATCH FULL
 ON DELETE NO ACTION ON UPDATE NO ACTION NOT DEFERRABLE;
 
 ALTER TABLE public.observation ADD CONSTRAINT obs_user_fk FOREIGN KEY (username)

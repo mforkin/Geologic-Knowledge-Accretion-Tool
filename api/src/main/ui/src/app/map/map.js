@@ -66,12 +66,25 @@ angular.module("map", [])
 
                 scope.map.addControl(zoomControl);
 
+                function popUpTemplate (ob) {
+                    return '<div class="marker-popup">' +
+                             '<label>Tags: </label>' +
+                             '<label class="label label-primary">' + ob.tags.join('</label><label class="label label-primary">') + '</label>' +
+                             '<br/><label>Description:</label>' + ob.description +
+                             '<br/><div class="img-popup">' +
+                                ob.images.reduce(function (tot, i) {
+                                    return tot + '<img src="rest/observation/image/' + i + '" />';
+                                }, '') +
+                             '</div>' +
+                            '</div>';
+                }
+
                 scope.$watch('observations', function (obs) {
                     siteLayer.clearLayers();
                     markerIds = [];
                     _.each(obs, function (ob) {
                         markerIds.push(ob.id);
-                        siteLayer.addLayer(L.marker([ob.lat, ob.lon], {icon: icon}).bindPopup('Tags: ' + ob.tags.join(", ") + '\nDescription:' + ob.description));
+                        siteLayer.addLayer(L.marker([ob.lat, ob.lon], {icon: icon}).bindPopup(popUpTemplate(ob)));
                     });
                 }, true);
             }
